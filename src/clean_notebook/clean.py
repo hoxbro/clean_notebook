@@ -10,7 +10,7 @@ def clean_notebook(files: list[str | Path], dryrun: bool = False):
         _clean_single_notebook(file, dryrun)
 
 
-def _clean_single_notebook(file: str | Path, dryrun: bool = False):
+def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool:
     if not str(file).endswith(".ipynb"):
         return
 
@@ -29,10 +29,10 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False):
     if cleaned:
         if not dryrun:
             with open(file, "w", encoding="utf8") as f:
-                json.dump(nb, f, indent=1)  # , ensure_ascii=False)
+                json.dump(nb, f, indent=1, ensure_ascii=False)
         print(f"Cleaned notebook: {file}")
 
-    return nb
+    return cleaned
 
 
 def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:

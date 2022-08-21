@@ -32,7 +32,7 @@ dev_template = "{tag}+{ccount}.g{sha}"
 dirty_template = "{tag}+{ccount}.g{sha}.dirty"
 
 [tool.pytest.ini_options]
-addopts = "-v"
+addopts = "-vv"
 
 [tool.black]
 line-length = 88
