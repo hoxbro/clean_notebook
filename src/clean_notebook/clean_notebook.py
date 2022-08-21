@@ -29,7 +29,7 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False):
     if cleaned:
         if not dryrun:
             with open(file, "w") as f:
-                json.dump(nb, f)
+                json.dump(nb, f, indent=1)
         print(f"Cleaned notebook: {file}")
 
 

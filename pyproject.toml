@@ -15,8 +15,9 @@ clean-notebook = "clean_notebook.__main__:main"
 
 [project.optional-dependencies]
 dev = [
-  'pytest',
-  'black',
+  "pytest",
+  "black",
+  "pre-commit"
 ]
 
 [tool.setuptools.packages.find]

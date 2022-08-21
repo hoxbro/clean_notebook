@@ -1,0 +1,5 @@
+- id: clean-notebook
+  name: clean-notebook
+  description: A simple package to clean notebook files output and metadata
+  entry: clean-notebook
+  language: python
