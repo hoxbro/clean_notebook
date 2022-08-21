@@ -23,7 +23,6 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["clean_notebook*"]
-exclude = ["clean_notebook.tests*"]
 namespaces = false
 
 [tool.setuptools-git-versioning]

@@ -29,8 +29,10 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False):
     if cleaned:
         if not dryrun:
             with open(file, "w") as f:
-                json.dump(nb, f, indent=1)
+                json.dump(nb, f, indent=1, ensure_ascii=False)
         print(f"Cleaned notebook: {file}")
+
+    return nb
 
 
 def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:

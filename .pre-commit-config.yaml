@@ -1,3 +1,4 @@
+exclude: ^tests/data/
 repos:
   - repo: local
     hooks:
