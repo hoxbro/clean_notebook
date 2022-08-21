@@ -1,18 +1,30 @@
 import json
+from pathlib import Path
+from shutil import copy2
 
 import pytest
 
 from clean_notebook.clean import _clean_single_notebook
 
 
+@pytest.fixture(scope="session")
+def temp_path(tmp_path_factory):
+    src = Path("tests/data").resolve(strict=True)
+    dst = tmp_path_factory.mktemp("data")
+
+    for file in src.glob("*.ipynb"):
+        copy2(file, dst / file.name)
+
+    return dst
+
+
 @pytest.mark.parametrize("test", ["ascii"])
-def test_notebook(test):
-    dirtyfile = f"tests/data/dirty_{test}.ipynb"
-    cleanfile = f"tests/data/clean_{test}.ipynb"
+def test_notebook(temp_path, test):
+    dirty = temp_path / f"dirty_{test}.ipynb"
+    clean = temp_path / f"clean_{test}.ipynb"
 
-    dirty = _clean_single_notebook(dirtyfile, dryrun=True)
+    assert dirty.read_bytes() != clean.read_bytes()
 
-    with open(cleanfile, encoding="utf8") as f:
-        clean = json.load(f)
+    _clean_single_notebook(dirty)
 
-    assert dirty == clean
+    assert dirty.read_bytes() == clean.read_bytes()
