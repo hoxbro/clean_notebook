@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clean_notebook"
+description = "A simple package to clean notebook files output and metadata"
+requires-python = ">=3.8"
+keywords = ["clean", "notebook"]
+license = {text = "BSD 3-Clause License"}
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["clean_notebook*"]
+exclude = ["clean_notebook.tests*"]
+namespaces = false
+
+[tool.setuptools-git-versioning]
+enabled = true
+dev_template = "{tag}+{ccount}.g{sha}"
+dirty_template = "{tag}+{ccount}.g{sha}.dirty"
+
+[project.scripts]
+clean-notebook = "clean_notebook.__main__:main"
