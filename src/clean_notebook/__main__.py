@@ -1,6 +1,6 @@
 import argparse
 
-from .clean_notebook import clean_notebook  # noqa
+from .clean import clean_notebook  # noqa
 
 
 def main():

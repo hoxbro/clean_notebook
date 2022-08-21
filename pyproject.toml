@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm", "setuptools-git-versioning"]
+requires = ["setuptools", "wheel", "setuptools-git-versioning"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -17,16 +17,31 @@ clean-notebook = "clean_notebook.__main__:main"
 dev = [
   "pytest",
   "black",
+  "isort",
   "pre-commit"
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["clean_notebook*"]
-exclude = ["clean_notebook.tests*"]
 namespaces = false
 
 [tool.setuptools-git-versioning]
 enabled = true
 dev_template = "{tag}+{ccount}.g{sha}"
 dirty_template = "{tag}+{ccount}.g{sha}.dirty"
+
+[tool.pytest.ini_options]
+addopts = "-v"
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310']
+include = '\.pyi?$'
+
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 88
+skip_gitignore = true
+known_first_party = ["clean_notebook"]
