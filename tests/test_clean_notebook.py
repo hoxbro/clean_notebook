@@ -17,7 +17,7 @@ def temp_path(tmp_path_factory):
     return dst
 
 
-@pytest.mark.parametrize("test", ["ascii"])
+@pytest.mark.parametrize("test", ["ascii", "jupyterlab", "vscode", "colab"])
 def test_notebook(temp_path, test):
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
