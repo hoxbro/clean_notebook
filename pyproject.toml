@@ -29,3 +29,6 @@ namespaces = false
 enabled = true
 dev_template = "{tag}+{ccount}.g{sha}"
 dirty_template = "{tag}+{ccount}.g{sha}.dirty"
+
+[tool.pytest.ini_options]
+addopts = "-v"
