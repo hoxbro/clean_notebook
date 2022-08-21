@@ -11,7 +11,7 @@ def test_notebook(test):
 
     dirty = _clean_single_notebook(dirtyfile, dryrun=True)
 
-    with open(cleanfile) as f:
+    with open(cleanfile, encoding="utf8") as f:
         clean = json.load(f)
 
     assert dirty == clean

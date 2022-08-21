@@ -14,7 +14,7 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False):
     if not str(file).endswith(".ipynb"):
         return
 
-    with open(file) as f:
+    with open(file, encoding="utf8") as f:
         nb = json.load(f)
 
     cleaned = False
@@ -28,8 +28,8 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False):
 
     if cleaned:
         if not dryrun:
-            with open(file, "w") as f:
-                json.dump(nb, f, indent=1, ensure_ascii=False)
+            with open(file, "w", encoding="utf8") as f:
+                json.dump(nb, f, indent=1)  # , ensure_ascii=False)
         print(f"Cleaned notebook: {file}")
 
     return nb
