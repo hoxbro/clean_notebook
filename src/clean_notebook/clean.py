@@ -6,7 +6,7 @@ from typing import Any
 
 
 def clean_notebook(files: list[str | Path], dryrun: bool = False):
-    for file in files:
+    for file in sorted(files):
         _clean_single_notebook(file, dryrun)
 
 
@@ -30,6 +30,7 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool:
         if not dryrun:
             with open(file, "w", encoding="utf8") as f:
                 json.dump(nb, f, indent=1, ensure_ascii=False)
+                f.write("\n")  # empty line at the end of the file
         print(f"Cleaned notebook: {file}")
 
     return cleaned
