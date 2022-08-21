@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from clean_notebook.clean_notebook import _clean_single_notebook
+from clean_notebook.clean import _clean_single_notebook
 
 
 @pytest.mark.parametrize("test", ["ascii"])
