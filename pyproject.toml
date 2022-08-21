@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools", "setuptools-scm", "setuptools-git-versioning"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,6 +9,15 @@ requires-python = ">=3.8"
 keywords = ["clean", "notebook"]
 license = {text = "BSD 3-Clause License"}
 dynamic = ["version"]
+
+[project.scripts]
+clean-notebook = "clean_notebook.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+  'pytest',
+  'black',
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -20,6 +29,3 @@ namespaces = false
 enabled = true
 dev_template = "{tag}+{ccount}.g{sha}"
 dirty_template = "{tag}+{ccount}.g{sha}.dirty"
-
-[project.scripts]
-clean-notebook = "clean_notebook.__main__:main"

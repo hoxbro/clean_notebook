@@ -1,6 +1,10 @@
-def clean_notebook(arguments: list[str]):
+def clean_notebooks(arguments: list[str]):
     for argument in arguments:
-        print(argument)
+        clean_notebook(argument)
+
+
+def clean_notebook(file):
+    print(file)
 
 
 if __name__ == "__main__":
