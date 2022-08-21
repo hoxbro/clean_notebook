@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 from shutil import copy2
 
@@ -18,7 +17,7 @@ def temp_path(tmp_path_factory):
     return dst
 
 
-@pytest.mark.parametrize("test", ["ascii"])
+@pytest.mark.parametrize("test", ["ascii", "jupyterlab", "vscode", "colab"])
 def test_notebook(temp_path, test):
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
@@ -27,4 +26,6 @@ def test_notebook(temp_path, test):
 
     _clean_single_notebook(dirty)
 
-    assert dirty.read_bytes() == clean.read_bytes()
+    clean_bytes = clean.read_bytes().replace(b"\r\n", b"\n")
+    dirty_bytes = dirty.read_bytes().replace(b"\r\n", b"\n")
+    assert clean_bytes == dirty_bytes

@@ -45,3 +45,4 @@ profile = "black"
 line_length = 88
 skip_gitignore = true
 known_first_party = ["clean_notebook"]
+src_paths = ["src", "tests"]
