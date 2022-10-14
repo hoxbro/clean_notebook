@@ -10,11 +10,22 @@ def clean_notebook(files: list[str | Path], dryrun: bool = False):
         _clean_single_notebook(file, dryrun)
 
 
-def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool:
+def _line_ending(s: str) -> str:
+    endings = ["\r\n", "\n", "\r"]
+    for e in endings:
+        if s.endswith(e):
+            return e
+
+    raise ValueError("No lineending found")
+
+
+def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | None:
     if not str(file).endswith(".ipynb"):
-        return
+        return None
 
     with open(file, encoding="utf8") as f:
+        newline = _line_ending(f.readline())
+        f.seek(0)
         nb = json.load(f)
 
     cleaned = False
@@ -26,11 +37,11 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool:
     metadata = {"language_info": {"name": "python", "pygments_lexer": "ipython3"}}
     cleaned |= _update_value(nb, "metadata", metadata)
 
+    if cleaned and not dryrun:
+        with open(file, "w", encoding="utf8", newline=newline) as f:
+            json.dump(nb, f, indent=1, ensure_ascii=False)
+            f.write(newline)  # empty line at the end of the file
     if cleaned:
-        if not dryrun:
-            with open(file, "w", encoding="utf8") as f:
-                json.dump(nb, f, indent=1, ensure_ascii=False)
-                f.write("\n")  # empty line at the end of the file
         print(f"Cleaned notebook: {file}")
 
     return cleaned

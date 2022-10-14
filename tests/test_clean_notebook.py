@@ -26,6 +26,6 @@ def test_notebook(temp_path, test):
 
     _clean_single_notebook(dirty)
 
-    clean_bytes = clean.read_bytes().replace(b"\r\n", b"\n")
-    dirty_bytes = dirty.read_bytes().replace(b"\r\n", b"\n")
+    clean_bytes = clean.read_bytes()
+    dirty_bytes = dirty.read_bytes()
     assert clean_bytes == dirty_bytes
