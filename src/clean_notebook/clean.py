@@ -10,13 +10,16 @@ def clean_notebook(files: list[str | Path], dryrun: bool = False):
         _clean_single_notebook(file, dryrun)
 
 
-def _line_ending(s: str) -> str:
-    endings = ["\r\n", "\n", "\r"]
-    for e in endings:
-        if s.endswith(e):
-            return e
+def find_line_ending(s: str | bytes) -> str | bytes:
+    if isinstance(s, str):
+        endings = ["\r\n", "\n", "\r"]
+    elif isinstance(s, bytes):
+        endings = [b"\r\n", b"\n", b"\r"]
+    else:
+        raise ValueError("Not str or bytes")
 
-    raise ValueError("No lineending found")
+    counter = {s.count(e): e for e in endings}
+    return counter[max(counter)]
 
 
 def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | None:
@@ -24,9 +27,10 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | Non
         return None
 
     with open(file, encoding="utf8") as f:
-        newline = _line_ending(f.readline())
-        f.seek(0)
-        nb = json.load(f)
+        raw = f.read()
+
+    newline = find_line_ending(raw)
+    nb = json.loads(raw)
 
     cleaned = False
     for cell in nb["cells"]:

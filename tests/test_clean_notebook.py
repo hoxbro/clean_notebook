@@ -3,7 +3,7 @@ from shutil import copy2
 
 import pytest
 
-from clean_notebook.clean import _clean_single_notebook
+from clean_notebook.clean import _clean_single_notebook, find_line_ending
 
 
 @pytest.fixture(scope="session")
@@ -28,4 +28,10 @@ def test_notebook(temp_path, test):
 
     clean_bytes = clean.read_bytes()
     dirty_bytes = dirty.read_bytes()
+
+    le = find_line_ending(clean_bytes)
+    clean_bytes = clean_bytes.replace(le, b"\n")
+    le = find_line_ending(dirty_bytes)
+    dirty_bytes = clean_bytes.replace(le, b"\n")
+
     assert clean_bytes == dirty_bytes
