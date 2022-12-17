@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, AnyStr
 
 
 def clean_notebook(files: list[str | Path], dryrun: bool = False):
@@ -10,7 +10,7 @@ def clean_notebook(files: list[str | Path], dryrun: bool = False):
         _clean_single_notebook(file, dryrun)
 
 
-def find_line_ending(s: str | bytes) -> str | bytes:
+def find_line_ending(s: AnyStr) -> AnyStr:
     if isinstance(s, str):
         endings = ["\r\n", "\n", "\r"]
     elif isinstance(s, bytes):
