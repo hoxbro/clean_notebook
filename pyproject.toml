@@ -18,7 +18,8 @@ dev = [
   "pytest",
   "black",
   "isort",
-  "pre-commit"
+  "mypy",
+  "pre-commit",
 ]
 
 [tool.setuptools.packages.find]

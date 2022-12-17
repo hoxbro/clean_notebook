@@ -2,11 +2,11 @@ exclude: ^tests/data/
 repos:
   - repo: local
     hooks:
-    - id: check-clean-notebook
-      name: Clean notebooks
-      language: python
-      entry: clean-notebook
-      files: '\.ipynb$'
+      - id: check-clean-notebook
+        name: Clean notebooks
+        language: python
+        entry: clean-notebook
+        files: '\.ipynb$'
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:
@@ -15,3 +15,7 @@ repos:
     rev: 22.6.0
     hooks:
       - id: black
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v0.991"
+    hooks:
+      - id: mypy
