@@ -18,7 +18,8 @@ dev = [
   "pytest",
   "black",
   "isort",
-  "pre-commit"
+  "mypy",
+  "pre-commit",
 ]
 
 [tool.setuptools.packages.find]
@@ -46,3 +47,6 @@ line_length = 88
 skip_gitignore = true
 known_first_party = ["clean_notebook"]
 src_paths = ["src", "tests"]
+
+[tool.ruff]
+line-length = 88
