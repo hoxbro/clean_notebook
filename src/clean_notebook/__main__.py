@@ -1,9 +1,9 @@
 import argparse
 
-from .clean import clean_notebook  # noqa
+from .clean import clean_notebook
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="*")
     args = parser.parse_args()
