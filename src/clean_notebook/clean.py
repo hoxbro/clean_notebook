@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, AnyStr
 
 
-def clean_notebook(files: list[str | Path], dryrun: bool = False):
+def clean_notebook(files: list[str | Path], dryrun: bool = False) -> None:
     for file in sorted(files):
         _clean_single_notebook(file, dryrun)
 

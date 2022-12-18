@@ -23,4 +23,3 @@ repos:
     rev: "v0.0.184"
     hooks:
       - id: ruff
-        args: [--fix]
