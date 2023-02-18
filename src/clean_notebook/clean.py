@@ -57,7 +57,7 @@ def clean_single_notebook(
             json.dump(nb, f, indent=1, ensure_ascii=False)
             f.write(newline)  # empty line at the end of the file
         print(f"Cleaned notebook: {file}")
-    if cleaned:
+    elif cleaned:
         print(f"Cleaned notebook (dryrun): {file}")
 
     return cleaned
