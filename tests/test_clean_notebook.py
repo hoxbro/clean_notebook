@@ -9,6 +9,7 @@ import pytest
 from clean_notebook.clean import clean_single_notebook, find_line_ending
 
 if TYPE_CHECKING:
+    from _pytest.capture import CaptureFixture
     from _pytest.tmpdir import TempPathFactory
 
 
@@ -55,3 +56,12 @@ def test_notebook(temp_path: Path, test: str) -> None:
     dirty_bytes = load_file(dirty)
 
     assert clean_bytes == dirty_bytes
+
+
+def test_empty_notebook(capsys: CaptureFixture[str], temp_path: Path) -> None:
+    dirty = temp_path / "dirty_empty.ipynb"
+
+    clean_single_notebook(dirty)
+
+    captured = capsys.readouterr()
+    assert captured.out.strip() == f"Notebook '{dirty}' does not have any valid cells."

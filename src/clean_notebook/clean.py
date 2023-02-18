@@ -45,6 +45,10 @@ def clean_single_notebook(
             nb["cells"].remove(cell)
             cleaned = True
 
+    if not nb["cells"]:
+        print(f"Notebook '{file}' does not have any valid cells.")
+        return True
+
     metadata = {"language_info": {"name": "python", "pygments_lexer": "ipython3"}}
     cleaned |= _update_value(nb, "metadata", metadata)
 
