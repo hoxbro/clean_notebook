@@ -5,16 +5,18 @@ from pathlib import Path
 from typing import Any, AnyStr
 
 
-def clean_notebook(files: list[str | Path], dryrun: bool = False) -> None:
+def clean_notebook(
+    files: list[str | Path], *, dryrun: bool = False, remove_empty: bool = True
+) -> None:
     for file in sorted(files):
-        _clean_single_notebook(file, dryrun)
+        clean_single_notebook(file, dryrun=dryrun, remove_empty=remove_empty)
 
 
 def find_line_ending(s: AnyStr) -> AnyStr:
     if isinstance(s, str):
-        endings = ["\r\n", "\n", "\r"]
+        endings = ["\n", "\rs", "\r\n"]
     elif isinstance(s, bytes):
-        endings = [b"\r\n", b"\n", b"\r"]
+        endings = [b"\n", b"\r", b"\r\n"]
     else:
         raise ValueError("Not str or bytes")
 
@@ -22,9 +24,11 @@ def find_line_ending(s: AnyStr) -> AnyStr:
     return counter[max(counter)]
 
 
-def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | None:
+def clean_single_notebook(
+    file: str | Path, *, dryrun: bool = False, remove_empty: bool = True
+) -> bool:
     if not str(file).endswith(".ipynb"):
-        return None
+        return False
 
     with open(file, encoding="utf8") as f:
         raw = f.read()
@@ -37,6 +41,13 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | Non
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", {})
+        if not cell["source"] and remove_empty:
+            nb["cells"].remove(cell)
+            cleaned = True
+
+    if not nb["cells"]:
+        print(f"Notebook '{file}' does not have any valid cells.")
+        return True
 
     metadata = {"language_info": {"name": "python", "pygments_lexer": "ipython3"}}
     cleaned |= _update_value(nb, "metadata", metadata)
@@ -45,8 +56,9 @@ def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | Non
         with open(file, "w", encoding="utf8", newline=newline) as f:
             json.dump(nb, f, indent=1, ensure_ascii=False)
             f.write(newline)  # empty line at the end of the file
-    if cleaned:
         print(f"Cleaned notebook: {file}")
+    elif cleaned:
+        print(f"Cleaned notebook (dryrun): {file}")
 
     return cleaned
 
@@ -57,7 +69,3 @@ def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:
         return True
     else:
         return False
-
-
-if __name__ == "__main__":
-    clean_notebook(["test"])
