@@ -22,9 +22,11 @@ def find_line_ending(s: AnyStr) -> AnyStr:
     return counter[max(counter)]
 
 
-def _clean_single_notebook(file: str | Path, dryrun: bool = False) -> bool | None:
+def _clean_single_notebook(
+    file: str | Path, dryrun: bool = False, remove_empty_cell: bool = True
+) -> bool:
     if not str(file).endswith(".ipynb"):
-        return None
+        return False
 
     with open(file, encoding="utf8") as f:
         raw = f.read()
@@ -57,7 +59,3 @@ def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:
         return True
     else:
         return False
-
-
-if __name__ == "__main__":
-    clean_notebook(["test"])
