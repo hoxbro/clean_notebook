@@ -8,7 +8,7 @@ repos:
         entry: clean-notebook
         files: '\.ipynb$'
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 23.1.0
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/mirrors-mypy
