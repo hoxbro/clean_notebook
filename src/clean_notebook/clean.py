@@ -39,6 +39,9 @@ def _clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", {})
+        if not cell["source"] and remove_empty_cell:
+            nb["cells"].remove(cell)
+            cleaned = True
 
     metadata = {"language_info": {"name": "python", "pygments_lexer": "ipython3"}}
     cleaned |= _update_value(nb, "metadata", metadata)
