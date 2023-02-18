@@ -5,9 +5,11 @@ from pathlib import Path
 from typing import Any, AnyStr
 
 
-def clean_notebook(files: list[str | Path], dryrun: bool = False) -> None:
+def clean_notebook(
+    files: list[str | Path], *, dryrun: bool = False, remove_empty: bool = True
+) -> None:
     for file in sorted(files):
-        _clean_single_notebook(file, dryrun)
+        clean_single_notebook(file, dryrun=dryrun, remove_empty=remove_empty)
 
 
 def find_line_ending(s: AnyStr) -> AnyStr:
@@ -22,8 +24,8 @@ def find_line_ending(s: AnyStr) -> AnyStr:
     return counter[max(counter)]
 
 
-def _clean_single_notebook(
-    file: str | Path, dryrun: bool = False, remove_empty_cell: bool = True
+def clean_single_notebook(
+    file: str | Path, *, dryrun: bool = False, remove_empty: bool = True
 ) -> bool:
     if not str(file).endswith(".ipynb"):
         return False
@@ -39,7 +41,7 @@ def _clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", {})
-        if not cell["source"] and remove_empty_cell:
+        if not cell["source"] and remove_empty:
             nb["cells"].remove(cell)
             cleaned = True
 

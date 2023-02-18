@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Iterator
 
 import pytest
 
-from clean_notebook.clean import _clean_single_notebook, find_line_ending
+from clean_notebook.clean import clean_single_notebook, find_line_ending
 
 if TYPE_CHECKING:
     from _pytest.tmpdir import TempPathFactory
@@ -49,7 +49,7 @@ def test_notebook(temp_path: Path, test: str) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
 
-    _clean_single_notebook(dirty)
+    clean_single_notebook(dirty)
 
     clean_bytes = load_file(clean)
     dirty_bytes = load_file(dirty)
