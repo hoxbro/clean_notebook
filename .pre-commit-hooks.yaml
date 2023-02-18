@@ -3,4 +3,4 @@
   description: A simple package to clean notebook files output and metadata
   entry: clean-notebook
   language: python
-  files: '\.ipynb$'
+  files: \.ipynb$
