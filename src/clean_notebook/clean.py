@@ -14,7 +14,7 @@ def clean_notebook(
 
 def find_line_ending(s: AnyStr) -> AnyStr:
     if isinstance(s, str):
-        endings = ["\n", "\rs", "\r\n"]
+        endings = ["\n", "\r", "\r\n"]
     elif isinstance(s, bytes):
         endings = [b"\n", b"\r", b"\r\n"]
     else:
