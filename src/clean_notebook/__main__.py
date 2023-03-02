@@ -1,5 +1,6 @@
 import argparse
 
+from . import __version__
 from .clean import clean_notebook
 
 
@@ -21,6 +22,8 @@ def main() -> None:
         action="store_false",
         help="Remove empty cells",
     )
+    parser.add_argument("--version", action="version", version=__version__)
+
     args = parser.parse_args()
 
     clean_notebook(args.filenames, dryrun=args.dryrun, remove_empty=args.remove_empty)
