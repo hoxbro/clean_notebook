@@ -29,4 +29,4 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Testing
-      run: pipx run nox -s test${{ matrix.python-version }}
+      run: pipx run nox -s test -p ${{ matrix.python-version }}
