@@ -14,7 +14,7 @@ if os.environ.get("CI", None):
 
 
 @nox.session(python=PYTHON_VERSIONS)
-def tests(session: nox.Session) -> None:
+def test(session: nox.Session) -> None:
     session.install("-e", ".[dev]")
     session.run("python", "-m", "pytest", "tests")
 
