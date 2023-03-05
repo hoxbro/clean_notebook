@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clean-notebook"
-readme = "README.md"
+readme = "readme.md"
 description = "A simple package to clean Jupyter notebooks"
 requires-python = ">=3.8"
-keywords = ["clean", "notebook"]
+keywords = ["clean", "jupyter", "notebook"]
 license = { text = "BSD 3-Clause License" }
 dynamic = ["version"]
 authors = [{name = "Simon Hansen"}]
@@ -29,7 +29,7 @@ Source = "https://github.com/hoxbro/clean_notebook"
 clean-notebook = "clean_notebook.__main__:main"
 
 [project.optional-dependencies]
-dev = ["pytest", "black", "ruff", "mypy", "pre-commit"]
+dev = ["nox", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -51,7 +51,7 @@ include = '\.pyi?$'
 
 [tool.mypy]
 python_version = "3.8"
-files = ["src", "tests"]
+files = ["src", "tests", "noxfile.py"]
 
 strict = true
 
