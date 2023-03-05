@@ -29,7 +29,7 @@ Source = "https://github.com/hoxbro/clean_notebook"
 clean-notebook = "clean_notebook.__main__:main"
 
 [project.optional-dependencies]
-dev = ["pytest", "black", "ruff", "mypy", "pre-commit"]
+dev = ["nox", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -51,7 +51,7 @@ include = '\.pyi?$'
 
 [tool.mypy]
 python_version = "3.8"
-files = ["src", "tests"]
+files = ["src", "tests", "noxfile.py"]
 
 strict = true
 
