@@ -1,12 +1,5 @@
 exclude: ^tests/data/
 repos:
-- repo: local
-  hooks:
-  - id: check-clean-notebook
-    name: Clean notebooks
-    language: python
-    entry: clean-notebook
-    files: \.ipynb$
 - repo: https://github.com/psf/black
   rev: 23.1.0
   hooks:
