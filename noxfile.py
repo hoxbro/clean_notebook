@@ -35,5 +35,6 @@ def build(session: nox.Session) -> None:
     if dist_p.exists():
         shutil.rmtree(dist_p)
 
-    session.install("build")
+    session.install("build", "twine")
     session.run("python", "-m", "build")
+    session.run("python", "-m", "twine", "check", "dist/*")
