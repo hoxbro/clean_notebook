@@ -10,7 +10,7 @@ If you want to run this tool in a CLI, [pipx](https://pypa.github.io/pipx/) is a
 pipx install clean-notebook
 ```
 
-To use `clean-notebook` with [pre-commit](https://pre-commit.com/), add this to your .pre-commit-config.yaml:
+To use `clean-notebook` with [pre-commit](https://pre-commit.com/), add this to your `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: https://github.com/hoxbro/clean_notebook

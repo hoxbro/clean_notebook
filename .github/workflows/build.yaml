@@ -1,8 +1,13 @@
-name: Release
+name: build and release
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+    - main
   pull_request:
+    branches:
+    - '*'
+  workflow_dispatch:
   release:
     types:
     - published
@@ -13,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build SDist and wheel
+    - name: Build sdist and wheel
       run: pipx run nox -s build
 
     - uses: actions/upload-artifact@v3
