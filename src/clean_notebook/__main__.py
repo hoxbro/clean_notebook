@@ -17,16 +17,16 @@ def main() -> None:
         help="Only dry run the test",
     )
     parser.add_argument(
-        "--remove-empty",
-        dest="remove_empty",
-        action="store_false",
-        help="Remove empty cells",
+        "--keep-empty",
+        dest="keep_empty",
+        action="store_true",
+        help="Keep empty cells",
     )
     parser.add_argument("--version", action="version", version=__version__)
 
     args = parser.parse_args()
 
-    clean_notebook(args.filenames, dryrun=args.dryrun, remove_empty=args.remove_empty)
+    clean_notebook(args.filenames, dryrun=args.dryrun, keep_empty=args.keep_empty)
 
 
 if __name__ == "__main__":

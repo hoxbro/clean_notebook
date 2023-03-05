@@ -6,10 +6,10 @@ from typing import Any, AnyStr
 
 
 def clean_notebook(
-    files: list[str | Path], *, dryrun: bool = False, remove_empty: bool = True
+    files: list[str | Path], *, dryrun: bool = False, keep_empty: bool = False
 ) -> None:
     for file in sorted(files):
-        clean_single_notebook(file, dryrun=dryrun, remove_empty=remove_empty)
+        clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty)
 
 
 def find_line_ending(s: AnyStr) -> AnyStr:
@@ -25,7 +25,7 @@ def find_line_ending(s: AnyStr) -> AnyStr:
 
 
 def clean_single_notebook(
-    file: str | Path, *, dryrun: bool = False, remove_empty: bool = True
+    file: str | Path, *, dryrun: bool = False, keep_empty: bool = False
 ) -> bool:
     if not str(file).endswith(".ipynb"):
         return False
@@ -41,7 +41,7 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", {})
-        if not cell["source"] and remove_empty:
+        if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
 
