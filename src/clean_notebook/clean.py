@@ -2,14 +2,29 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, AnyStr
+from typing import Any, AnyStr, Iterator
 
 
 def clean_notebook(
-    files: list[str | Path], *, dryrun: bool = False, keep_empty: bool = False
+    files: list[str | Path],
+    *,
+    dryrun: bool = False,
+    keep_empty: bool = False,
+    recursive: bool = False,
 ) -> None:
+    if recursive:
+        files = sorted(_get_files(files))
     for file in sorted(files):
         clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty)
+
+
+def _get_files(files: list[str | Path]) -> Iterator[str | Path]:
+    for file in files:
+        if str(file).endswith(".ipynb"):
+            yield file
+            continue
+        for path in Path(file).rglob("*.ipynb"):
+            yield path
 
 
 def find_line_ending(s: AnyStr) -> AnyStr:

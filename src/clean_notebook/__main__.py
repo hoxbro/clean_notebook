@@ -22,11 +22,23 @@ def main() -> None:
         action="store_true",
         help="Keep empty cells",
     )
+    parser.add_argument(
+        "--recursive",
+        "-r",
+        dest="recursive",
+        action="store_true",
+        help="Recursive find notebook files",
+    )
     parser.add_argument("--version", action="version", version=__version__)
 
     args = parser.parse_args()
 
-    clean_notebook(args.filenames, dryrun=args.dryrun, keep_empty=args.keep_empty)
+    clean_notebook(
+        args.filenames,
+        dryrun=args.dryrun,
+        keep_empty=args.keep_empty,
+        recursive=args.recursive,
+    )
 
 
 if __name__ == "__main__":
