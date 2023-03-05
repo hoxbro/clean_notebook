@@ -7,7 +7,7 @@ name = "clean-notebook"
 readme = "readme.md"
 description = "A simple package to clean Jupyter notebooks"
 requires-python = ">=3.8"
-keywords = ["clean", "notebook"]
+keywords = ["clean", "jupyter", "notebook"]
 license = { text = "BSD 3-Clause License" }
 dynamic = ["version"]
 authors = [{name = "Simon Hansen"}]
