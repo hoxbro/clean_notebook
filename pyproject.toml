@@ -106,3 +106,4 @@ unfixable = [
 
 [tool.ruff.isort]
 known-first-party = ["clean_notebook"]
+required-imports = ["from __future__ import annotations"]
