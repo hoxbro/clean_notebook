@@ -34,7 +34,7 @@ def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
 TESTS = ["ascii", "jupyterlab", "vscode", "colab", "empty_cell"]
 
 
-@pytest.mark.parametrize("test", TESTS)
+@pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow"])
 def test_noclean_notebook(temp_path: Path, test: str) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
@@ -56,6 +56,22 @@ def test_notebook(temp_path: Path, test: str) -> None:
     dirty_bytes = load_file(dirty)
 
     assert clean_bytes == dirty_bytes
+
+
+def test_ignore_metadata(temp_path: Path) -> None:
+    test = "ignore_slideshow"
+    dirty = temp_path / f"dirty_{test}.ipynb"
+    clean = temp_path / f"clean_{test}.ipynb"
+
+    clean_single_notebook(dirty, ignore=["slideshow"])
+    clean_bytes = load_file(clean)
+    dirty_bytes = load_file(dirty)
+    assert clean_bytes == dirty_bytes
+
+    # Test when ignore is not added
+    clean_single_notebook(dirty)
+    dirty_bytes = load_file(dirty)
+    assert clean_bytes != dirty_bytes
 
 
 def test_empty_notebook(capsys: CaptureFixture[str], temp_path: Path) -> None:
