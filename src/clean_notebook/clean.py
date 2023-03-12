@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, AnyStr
+from typing import Any, AnyStr, Iterator
 
 
 def clean_notebook(
-    files: list[str | Path], *, dryrun: bool = False, keep_empty: bool = False
+    paths: list[str | Path],
+    *,
+    dryrun: bool = False,
+    keep_empty: bool = False,
 ) -> None:
-    for file in sorted(files):
+    files = sorted(_get_files(paths))
+    for file in files:
         clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty)
 
 
@@ -25,11 +29,11 @@ def find_line_ending(s: AnyStr) -> AnyStr:
 
 
 def clean_single_notebook(
-    file: str | Path, *, dryrun: bool = False, keep_empty: bool = False
+    file: Path,
+    *,
+    dryrun: bool = False,
+    keep_empty: bool = False,
 ) -> bool:
-    if not str(file).endswith(".ipynb"):
-        return False
-
     with open(file, encoding="utf8") as f:
         raw = f.read()
 
@@ -69,3 +73,13 @@ def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:
         return True
     else:
         return False
+
+
+def _get_files(paths: list[str | Path]) -> Iterator[Path]:
+    for path in map(Path, paths):
+        if path.is_file() and path.suffix == ".ipynb":
+            yield path
+        if path.is_dir():
+            for file in path.rglob("*.ipynb"):
+                yield file
+

@@ -6,12 +6,16 @@ from . import __version__
 from .clean import clean_notebook
 
 
-def main() -> None:
+def _create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Clean Jupyter Notebooks output and metadata",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("filenames", nargs="+", help="Notebook(s) to clean")
+    parser.add_argument(
+        "paths",
+        nargs="+",
+        help="Path or file with Notebook to clean",
+    )
     parser.add_argument(
         "--dryrun",
         dest="dryrun",
@@ -25,10 +29,13 @@ def main() -> None:
         help="Keep empty cells",
     )
     parser.add_argument("--version", action="version", version=__version__)
+    return parser
 
+
+def main() -> None:
+    parser = _create_parser()
     args = parser.parse_args()
-
-    clean_notebook(args.filenames, dryrun=args.dryrun, keep_empty=args.keep_empty)
+    clean_notebook(**vars(args))
 
 
 if __name__ == "__main__":
