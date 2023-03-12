@@ -14,13 +14,13 @@ def _create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "paths",
         nargs="+",
-        help="Path or file with Notebook to clean",
+        help="Run clean-notebook on the given files or directories",
     )
     parser.add_argument(
         "--dryrun",
         dest="dryrun",
         action="store_true",
-        help="Only dry run the test",
+        help="Dry run the command",
     )
     parser.add_argument(
         "--keep-empty",
