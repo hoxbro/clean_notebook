@@ -28,6 +28,13 @@ def _create_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Keep empty cells",
     )
+    parser.add_argument(
+        "--ignore",
+        "-i",
+        dest="ignore",
+        action="append",
+        help="Metadata keys to ignore when cleaning",
+    )
     parser.add_argument("--version", action="version", version=__version__)
     return parser
 

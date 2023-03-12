@@ -10,10 +10,11 @@ def clean_notebook(
     *,
     dryrun: bool = False,
     keep_empty: bool = False,
+    ignore: list[str] | None = None,
 ) -> None:
     files = sorted(_get_files(paths))
     for file in files:
-        clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty)
+        clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore)
 
 
 def find_line_ending(s: AnyStr) -> AnyStr:
@@ -33,6 +34,7 @@ def clean_single_notebook(
     *,
     dryrun: bool = False,
     keep_empty: bool = False,
+    ignore: list[str] | None = None,
 ) -> bool:
     with open(file, encoding="utf8") as f:
         raw = f.read()
@@ -44,7 +46,8 @@ def clean_single_notebook(
     for cell in nb["cells"]:
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
-        cleaned |= _update_value(cell, "metadata", {})
+        cell_metadata = _ignore(cell, ignore)
+        cleaned |= _update_value(cell, "metadata", cell_metadata)
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
@@ -83,3 +86,8 @@ def _get_files(paths: list[str | Path]) -> Iterator[Path]:
             for file in path.rglob("*.ipynb"):
                 yield file
 
+
+def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
+    if "metadata" in cell and ignore:
+        return {k: v for k, v in cell["metadata"].items() if k in ignore}
+    return {}
