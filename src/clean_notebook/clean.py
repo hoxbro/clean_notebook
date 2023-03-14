@@ -84,7 +84,8 @@ def _get_files(paths: list[str | Path]) -> Iterator[Path]:
             yield path
         if path.is_dir():
             for file in path.rglob("*.ipynb"):
-                yield file
+                if file.parent.name != ".ipynb_checkpoints":
+                    yield file
 
 
 def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
