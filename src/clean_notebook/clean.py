@@ -12,8 +12,7 @@ def clean_notebook(
     keep_empty: bool = False,
     ignore: list[str] | None = None,
 ) -> None:
-    files = sorted(_get_files(paths))
-    for file in files:
+    for file in sorted(_get_files(paths)):
         clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore)
 
 
@@ -46,8 +45,7 @@ def clean_single_notebook(
     for cell in nb["cells"]:
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
-        cell_metadata = _ignore(cell, ignore)
-        cleaned |= _update_value(cell, "metadata", cell_metadata)
+        cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
@@ -84,7 +82,8 @@ def _get_files(paths: list[str | Path]) -> Iterator[Path]:
             yield path
         if path.is_dir():
             for file in path.rglob("*.ipynb"):
-                yield file
+                if file.parent.name != ".ipynb_checkpoints":
+                    yield file
 
 
 def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
