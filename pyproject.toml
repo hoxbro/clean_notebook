@@ -31,11 +31,6 @@ clean-notebook = "clean_notebook.__main__:main"
 [project.optional-dependencies]
 dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
-# [tool.setuptools.packages.find]
-# where = ["src"]
-# include = ["clean_notebook*"]
-# namespaces = false
-
 [tool.hatch.version]
 source = "vcs"
 
@@ -46,7 +41,7 @@ scripts.run = "pre-commit run --all"
 [tool.hatch.envs.test]
 dependencies = ["pytest"]
 scripts.run = "pytest tests"
-matrix = [{python = ["3.8", "3.9", "3.10", "3.11"]}]
+matrix = [{python = ["3.8", "3.9", "3.10", "3.11", "3.12"]}]
 
 [tool.hatch.build]
 sources = ["src"]
