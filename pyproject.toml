@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "wheel", "setuptools-git-versioning"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "clean-notebook"
@@ -29,17 +29,22 @@ Source = "https://github.com/hoxbro/clean_notebook"
 clean-notebook = "clean_notebook.__main__:main"
 
 [project.optional-dependencies]
-dev = ["nox", "pytest", "black", "ruff", "mypy", "pre-commit"]
+dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["clean_notebook*"]
-namespaces = false
+[tool.hatch.version]
+source = "vcs"
 
-[tool.setuptools-git-versioning]
-enabled = true
-dev_template = "{tag}+{ccount}.g{sha}"
-dirty_template = "{tag}+{ccount}.g{sha}.dirty"
+[tool.hatch.envs.lint]
+dependencies = ["pre-commit"]
+scripts.run = "pre-commit run --all"
+
+[tool.hatch.envs.test]
+dependencies = ["pytest"]
+scripts.run = "pytest tests"
+matrix = [{python = ["3.8", "3.9", "3.10", "3.11"]}]
+
+[tool.hatch.build]
+sources = ["src"]
 
 [tool.pytest.ini_options]
 addopts = "-vv"
@@ -51,7 +56,7 @@ include = '\.pyi?$'
 
 [tool.mypy]
 python_version = "3.8"
-files = ["src", "tests", "noxfile.py"]
+files = ["src", "tests"]
 
 strict = true
 
