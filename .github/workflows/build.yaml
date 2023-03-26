@@ -14,22 +14,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Install hatch
+      run: pipx install hatch
     - name: Build sdist and wheel
-      run: pipx run nox -s build
-    - uses: actions/upload-artifact@v3
-      with:
-        path: dist/*
-
-  publish:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: artifact
-        path: dist
-    - uses: pypa/gh-action-pypi-publish@v1.6.4
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
+      run: hatch build -c
+    - name: Publish
+      if: github.event_name == 'release' && github.event.action == 'published'
+      run: echo publish # hatch publish
