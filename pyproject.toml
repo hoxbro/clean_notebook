@@ -4,16 +4,16 @@ build-backend = "hatchling.build"
 
 [project]
 name = "clean-notebook"
-readme = "readme.md"
+readme = "README.md"
+license = "MIT"
 description = "A simple package to clean Jupyter notebooks"
 requires-python = ">=3.8"
 keywords = ["clean", "jupyter", "notebook"]
-license = { text = "BSD 3-Clause License" }
 dynamic = ["version"]
 authors = [{name = "Simon Hansen"}]
 maintainers = [{name = "Simon Hansen"}]
 classifiers = [
-    "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
