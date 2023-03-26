@@ -61,7 +61,7 @@ include = '\.pyi?$'
 
 [tool.mypy]
 python_version = "3.8"
-files = ["src", "tests", "noxfile.py"]
+files = ["src", "tests"]
 
 strict = true
 
