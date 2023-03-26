@@ -41,7 +41,7 @@ scripts.run = "pre-commit run --all"
 [tool.hatch.envs.test]
 dependencies = ["pytest"]
 scripts.run = "pytest tests"
-matrix = [{python = ["3.8", "3.9", "3.10", "3.11", "3.12"]}]
+matrix = [{python = ["3.8", "3.9", "3.10", "3.11"]}]
 
 [tool.hatch.build]
 sources = ["src"]
