@@ -29,4 +29,4 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Testing
-      run: hatch run test.py${{ matrix.python-version }}:test
+      run: pipx run hatch run test.py${{ matrix.python-version }}:test
