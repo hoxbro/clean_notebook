@@ -20,4 +20,4 @@ jobs:
       run: hatch build -c
     - name: Publish
       if: github.event_name == 'release' && github.event.action == 'published'
-      run: echo publish # hatch publish
+      run: hatch publish --user __token__ --auth ${{ secrets.pypi_password }}
