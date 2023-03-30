@@ -37,15 +37,12 @@ source = "vcs"
 [tool.hatch.envs.lint]
 dependencies = ["pre-commit"]
 scripts.run = "pre-commit run --all"
+scripts.update = "pre-commit autoupdate"
 
 [tool.hatch.envs.test]
 dependencies = ["pytest"]
 scripts.run = "pytest tests"
 matrix = [{python = ["3.8", "3.9", "3.10", "3.11"]}]
-
-[tool.hatch.envs.dev]
-dependencies = ["pre-commit"]
-scripts.precommit = "pre-commit autoupdate"
 
 [tool.hatch.build]
 sources = ["src"]
