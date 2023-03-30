@@ -10,8 +10,8 @@ description = "A simple package to clean Jupyter notebooks"
 requires-python = ">=3.8"
 keywords = ["clean", "jupyter", "notebook"]
 dynamic = ["version"]
-authors = [{name = "Simon Hansen"}]
-maintainers = [{name = "Simon Hansen"}]
+authors = [{ name = "Simon Hansen" }]
+maintainers = [{ name = "Simon Hansen" }]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.8",
@@ -42,7 +42,7 @@ scripts.update = "pre-commit autoupdate"
 [tool.hatch.envs.test]
 dependencies = ["pytest"]
 scripts.run = "pytest tests"
-matrix = [{python = ["3.8", "3.9", "3.10", "3.11"]}]
+matrix = [{ python = ["3.8", "3.9", "3.10", "3.11"] }]
 
 [tool.hatch.build]
 sources = ["src"]
