@@ -34,7 +34,7 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 [tool.hatch.version]
 source = "vcs"
 
-[tool.hatch.envs.lint]
+[tool.hatch.envs.fmt]
 dependencies = ["pre-commit"]
 scripts.run = "pre-commit run --all"
 scripts.update = "pre-commit autoupdate"
