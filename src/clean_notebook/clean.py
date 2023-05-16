@@ -49,6 +49,9 @@ def clean_single_notebook(
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
+        if "attachments" in cell and len(cell["attachments"]) == 0:
+            del cell["attachments"]
+            cleaned = True
 
     if not nb["cells"]:
         print(f"Notebook '{file}' does not have any valid cells.")
