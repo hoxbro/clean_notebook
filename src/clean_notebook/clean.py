@@ -22,7 +22,8 @@ def find_line_ending(s: AnyStr) -> AnyStr:
     elif isinstance(s, bytes):
         endings = [b"\n", b"\r", b"\r\n"]
     else:
-        raise ValueError("Not str or bytes")
+        msg = "Not str or bytes"
+        raise ValueError(msg)
 
     counter = {s.count(e): e for e in endings}
     return counter[max(counter)]
