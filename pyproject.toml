@@ -78,12 +78,16 @@ line-length = 88
 
 select = [
     "B",
+    "C4",
     "C90",
     "E",
+    "EM",
     "F",
+    "FLY",
     "I",
     "ICN",
     "ISC",
+    "PIE",
     "PLC",
     "PLE",
     "PLR",
