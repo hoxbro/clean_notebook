@@ -87,6 +87,7 @@ select = [
     "I",
     "ICN",
     "ISC",
+    "PERF",
     "PIE",
     "PLC",
     "PLE",
