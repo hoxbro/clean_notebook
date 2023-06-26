@@ -95,6 +95,7 @@ select = [
     "RUF",
     "S",
     "SIM",
+    "TCH",
     "TID",
     "UP",
     "W",
