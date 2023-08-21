@@ -43,7 +43,7 @@ def clean_single_notebook(
     nb = json.loads(raw)
 
     cleaned = False
-    for cell in nb["cells"]:
+    for cell in nb["cells"].copy():
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
