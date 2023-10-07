@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import uuid
 from pathlib import Path
 from shutil import copy2, rmtree
 from typing import TYPE_CHECKING, Iterator
@@ -10,6 +12,7 @@ from clean_notebook.clean import clean_single_notebook, find_line_ending
 
 if TYPE_CHECKING:
     from _pytest.capture import CaptureFixture
+    from _pytest.monkeypatch import MonkeyPatch
     from _pytest.tmpdir import TempPathFactory
 
 
@@ -34,7 +37,7 @@ def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
 TESTS = ["ascii", "jupyterlab", "vscode", "colab", "empty_cell", "empty_multi_cell"]
 
 
-@pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow"])
+@pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow", "id"])
 def test_noclean_notebook(temp_path: Path, test: str) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
@@ -72,6 +75,31 @@ def test_ignore_metadata(temp_path: Path) -> None:
     clean_single_notebook(dirty)
     dirty_bytes = load_file(dirty)
     assert clean_bytes != dirty_bytes
+
+
+def test_notebook_id(temp_path: Path, monkeypatch: MonkeyPatch) -> None:
+    test = "id"
+    dirty = temp_path / f"dirty_{test}.ipynb"
+    clean = temp_path / f"clean_{test}.ipynb"
+
+    ids = [
+        "3d183bd1-509f-4758-9f2d-db94b23c58f9",
+        "66cdc779-4931-4306-881a-4bf30cb0fdbb",
+        "5cbb8154-79ee-4290-953c-89a89b4276b7",
+    ]
+    iterator = iter(ids)
+    monkeypatch.setattr(uuid, "uuid4", lambda: next(iterator))
+
+    clean_single_notebook(dirty)
+    clean_bytes = load_file(clean)
+    dirty_bytes = load_file(dirty)
+    assert json.loads(clean_bytes) == json.loads(dirty_bytes)
+
+
+def test_notebook_no_overwrite_ids(temp_path: Path) -> None:
+    test = "id"
+    clean = temp_path / f"clean_{test}.ipynb"
+    assert not clean_single_notebook(clean)
 
 
 def test_empty_notebook(capsys: CaptureFixture[str], temp_path: Path) -> None:
