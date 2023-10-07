@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import json
+import uuid
 from pathlib import Path
 from typing import Any, AnyStr, Iterator
+
+__all__ = ("clean_notebook", "clean_single_notebook")
 
 
 def clean_notebook(
@@ -29,6 +32,11 @@ def find_line_ending(s: AnyStr) -> AnyStr:
     return counter[max(counter)]
 
 
+def _check_set_id(nb: dict[str, Any]) -> bool:
+    # https://jupyter.org/enhancement-proposals/62-cell-id/cell-id.html
+    return (nb["nbformat"] == 4 and nb["nbformat_minor"] >= 5) or nb["nbformat"] >= 5
+
+
 def clean_single_notebook(
     file: Path,
     *,
@@ -42,6 +50,7 @@ def clean_single_notebook(
     newline = find_line_ending(raw)
     nb = json.loads(raw)
 
+    set_id = _check_set_id(nb)
     cleaned = False
     for cell in nb["cells"].copy():
         cleaned |= _update_value(cell, "outputs", [])
@@ -53,6 +62,9 @@ def clean_single_notebook(
         if "attachments" in cell and len(cell["attachments"]) == 0:
             del cell["attachments"]
             cleaned = True
+        if set_id and cell.get("id") is None:
+            cell["id"] = str(uuid.uuid4())
+            cleaned = True
 
     if not nb["cells"]:
         print(f"Notebook '{file}' does not have any valid cells.")
@@ -63,7 +75,7 @@ def clean_single_notebook(
 
     if cleaned and not dryrun:
         with open(file, "w", encoding="utf8", newline=newline) as f:
-            json.dump(nb, f, indent=1, ensure_ascii=False)
+            json.dump(nb, f, indent=1, ensure_ascii=False, sort_keys=True)
             f.write(newline)  # empty line at the end of the file
         print(f"Cleaned notebook: {file}")
     elif cleaned:
