@@ -52,7 +52,7 @@ def test_notebook(temp_path: Path, test: str) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
 
-    clean_single_notebook(dirty)
+    assert clean_single_notebook(dirty)
 
     clean_bytes = load_file(clean)
     dirty_bytes = load_file(dirty)
@@ -65,7 +65,7 @@ def test_ignore_metadata(temp_path: Path) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
 
-    clean_single_notebook(dirty, ignore=["slideshow"])
+    assert clean_single_notebook(dirty, ignore=["slideshow"])
     clean_bytes = load_file(clean)
     dirty_bytes = load_file(dirty)
     assert clean_bytes == dirty_bytes
