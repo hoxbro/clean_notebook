@@ -93,6 +93,7 @@ select = [
     "PLE",
     "PLR",
     "PLW",
+    "PT",
     "RUF",
     "S",
     "SIM",
@@ -102,6 +103,7 @@ select = [
     "W",
     "YTT",
 ]
+
 ignore = [
     "E402", # Module level import not at top of file
     "E731", # Do not assign a lambda expression, use a def
