@@ -42,7 +42,7 @@ scripts.update = "pre-commit autoupdate"
 [tool.hatch.envs.test]
 dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
-matrix = [{ python = ["3.8", "3.9", "3.10", "3.11"] }]
+matrix = [{ python = ["3.8", "3.9", "3.10", "3.11", "3.12"] }]
 
 [tool.hatch.build]
 sources = ["src"]
