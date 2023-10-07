@@ -18,6 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
 ]
 
@@ -35,12 +36,12 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 source = "vcs"
 
 [tool.hatch.envs.fmt]
-dependencies = ["pre-commit"]
+detached = true
 scripts.run = "pre-commit run --all"
 scripts.update = "pre-commit autoupdate"
 
 [tool.hatch.envs.test]
-dependencies = ["pytest"]
+dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
 matrix = [{ python = ["3.8", "3.9", "3.10", "3.11", "3.12"] }]
 
@@ -49,11 +50,6 @@ sources = ["src"]
 
 [tool.pytest.ini_options]
 addopts = "-vv"
-
-[tool.black]
-line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311']
-include = '\.pyi?$'
 
 [tool.mypy]
 python_version = "3.8"
@@ -93,6 +89,7 @@ select = [
     "PLE",
     "PLR",
     "PLW",
+    "PT",
     "RUF",
     "S",
     "SIM",
@@ -102,6 +99,7 @@ select = [
     "W",
     "YTT",
 ]
+
 ignore = [
     "E402", # Module level import not at top of file
     "E731", # Do not assign a lambda expression, use a def
