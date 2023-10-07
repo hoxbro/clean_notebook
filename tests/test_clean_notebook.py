@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import uuid
 from pathlib import Path
 from shutil import copy2, rmtree
@@ -93,7 +92,7 @@ def test_notebook_id(temp_path: Path, monkeypatch: MonkeyPatch) -> None:
     clean_single_notebook(dirty)
     clean_bytes = load_file(clean)
     dirty_bytes = load_file(dirty)
-    assert json.loads(clean_bytes) == json.loads(dirty_bytes)
+    assert clean_bytes == dirty_bytes
 
 
 def test_notebook_no_overwrite_ids(temp_path: Path) -> None:
