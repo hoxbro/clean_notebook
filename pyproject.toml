@@ -35,12 +35,12 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 source = "vcs"
 
 [tool.hatch.envs.fmt]
-dependencies = ["pre-commit"]
+detached = true
 scripts.run = "pre-commit run --all"
 scripts.update = "pre-commit autoupdate"
 
 [tool.hatch.envs.test]
-dependencies = ["pytest"]
+dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
 matrix = [{ python = ["3.8", "3.9", "3.10", "3.11"] }]
 
