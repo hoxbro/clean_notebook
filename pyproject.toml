@@ -50,11 +50,6 @@ sources = ["src"]
 [tool.pytest.ini_options]
 addopts = "-vv"
 
-[tool.black]
-line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311']
-include = '\.pyi?$'
-
 [tool.mypy]
 python_version = "3.8"
 files = ["src", "tests"]
