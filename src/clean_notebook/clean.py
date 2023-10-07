@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any, AnyStr, Iterator
 
+__all__ = ("clean_notebook", "clean_single_notebook")
+
 
 def clean_notebook(
     paths: list[str | Path],
