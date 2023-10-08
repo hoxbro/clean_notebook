@@ -19,24 +19,6 @@ def clean_notebook(
         clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore)
 
 
-def find_line_ending(s: AnyStr) -> AnyStr:
-    if isinstance(s, str):
-        endings = ["\n", "\r", "\r\n"]
-    elif isinstance(s, bytes):
-        endings = [b"\n", b"\r", b"\r\n"]
-    else:
-        msg = "Not str or bytes"
-        raise ValueError(msg)
-
-    counter = {s.count(e): e for e in endings}
-    return counter[max(counter)]
-
-
-def _check_set_id(nb: dict[str, Any]) -> bool:
-    # https://jupyter.org/enhancement-proposals/62-cell-id/cell-id.html
-    return (nb["nbformat"] == 4 and nb["nbformat_minor"] >= 5) or nb["nbformat"] >= 5
-
-
 def clean_single_notebook(
     file: Path,
     *,
@@ -47,10 +29,10 @@ def clean_single_notebook(
     with open(file, encoding="utf8") as f:
         raw = f.read()
 
-    newline = find_line_ending(raw)
+    newline = _find_line_ending(raw)
     nb = json.loads(raw)
-
     set_id = _check_set_id(nb)
+
     cleaned = False
     for cell in nb["cells"].copy():
         cleaned |= _update_value(cell, "outputs", [])
@@ -106,3 +88,21 @@ def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
     if "metadata" in cell and ignore:
         return {k: v for k, v in cell["metadata"].items() if k in ignore}
     return {}
+
+
+def _check_set_id(nb: dict[str, Any]) -> bool:
+    # https://jupyter.org/enhancement-proposals/62-cell-id/cell-id.html
+    return (nb["nbformat"] == 4 and nb["nbformat_minor"] >= 5) or nb["nbformat"] >= 5
+
+
+def _find_line_ending(s: AnyStr) -> AnyStr:
+    if isinstance(s, str):
+        endings = ["\n", "\r", "\r\n"]
+    elif isinstance(s, bytes):
+        endings = [b"\n", b"\r", b"\r\n"]
+    else:
+        msg = "Not str or bytes"
+        raise ValueError(msg)
+
+    counter = {s.count(e): e for e in endings}
+    return counter[max(counter)]

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Iterator
 
 import pytest
 
-from clean_notebook.clean import clean_single_notebook, find_line_ending
+from clean_notebook.clean import _find_line_ending, clean_single_notebook
 
 if TYPE_CHECKING:
     from _pytest.capture import CaptureFixture
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 def load_file(path: Path) -> bytes:
     file_bytes = path.read_bytes()
-    le = find_line_ending(file_bytes)
+    le = _find_line_ending(file_bytes)
     return file_bytes.replace(le, b"\n")
 
 
