@@ -33,7 +33,7 @@ def clean_single_notebook(
     nb = json.loads(raw)
     set_id = _check_set_id(nb)
 
-    cleaned = False
+    cleaned, sort_keys = False, False
     for cell in nb["cells"].copy():
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
@@ -45,6 +45,7 @@ def clean_single_notebook(
             del cell["attachments"]
             cleaned = True
         if set_id and cell.get("id") is None:
+            sort_keys |= "id" not in cell
             cell["id"] = str(uuid.uuid4())
             cleaned = True
 
@@ -57,7 +58,7 @@ def clean_single_notebook(
 
     if cleaned and not dryrun:
         with open(file, "w", encoding="utf8", newline=newline) as f:
-            json.dump(nb, f, indent=1, ensure_ascii=False, sort_keys=True)
+            json.dump(nb, f, indent=1, ensure_ascii=False, sort_keys=sort_keys)
             f.write(newline)  # empty line at the end of the file
         print(f"Cleaned notebook: {file}")
     elif cleaned:
