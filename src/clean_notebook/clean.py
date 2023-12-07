@@ -42,9 +42,6 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
-        if not cell["source"] and not keep_empty:
-            nb["cells"].remove(cell)
-            cleaned = True
         if strip and cell["source"]:
             new = cell["source"][-1].rstrip(newline)
             cleaned = cell["source"][-1] != new
@@ -52,6 +49,9 @@ def clean_single_notebook(
                 cell["source"][-1] = new
             else:
                 cell["source"].pop()
+        if not cell["source"] and not keep_empty:
+            nb["cells"].remove(cell)
+            cleaned = True
         if "attachments" in cell and len(cell["attachments"]) == 0:
             del cell["attachments"]
             cleaned = True
