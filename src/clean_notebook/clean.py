@@ -14,9 +14,12 @@ def clean_notebook(
     dryrun: bool = False,
     keep_empty: bool = False,
     ignore: list[str] | None = None,
+    strip: bool = False,
 ) -> None:
     for file in sorted(_get_files(paths)):
-        clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore)
+        clean_single_notebook(
+            file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore, strip=strip
+        )
 
 
 def clean_single_notebook(
@@ -25,6 +28,7 @@ def clean_single_notebook(
     dryrun: bool = False,
     keep_empty: bool = False,
     ignore: list[str] | None = None,
+    strip: bool = False,
 ) -> bool:
     with open(file, encoding="utf8") as f:
         raw = f.read()
@@ -41,6 +45,10 @@ def clean_single_notebook(
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
+        if strip and cell["source"]:
+            new = cell["source"][-1].rstrip(newline)
+            cleaned = cell["source"][-1] != new
+            cell["source"][-1] = new
         if "attachments" in cell and len(cell["attachments"]) == 0:
             del cell["attachments"]
             cleaned = True
