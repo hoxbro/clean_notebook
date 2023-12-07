@@ -48,7 +48,10 @@ def clean_single_notebook(
         if strip and cell["source"]:
             new = cell["source"][-1].rstrip(newline)
             cleaned = cell["source"][-1] != new
-            cell["source"][-1] = new
+            if new:
+                cell["source"][-1] = new
+            else:
+                cell["source"].pop()
         if "attachments" in cell and len(cell["attachments"]) == 0:
             del cell["attachments"]
             cleaned = True
