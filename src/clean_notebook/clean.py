@@ -116,10 +116,14 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
 
 
 def _strip_ending_newline(cell: dict[str, Any], newline: AnyStr) -> bool:
-    new = cell["source"][-1].rstrip(newline)
-    cleaned = cell["source"][-1] != new
-    if new:
-        cell["source"][-1] = new
-    else:
-        cell["source"].pop()
+    cleaned = False
+    while cell["source"]:
+        new = cell["source"][-1].rstrip(newline)
+        cleaned |= cell["source"][-1] != new
+        if cleaned and new:
+            cell["source"][-1] = new
+        elif cleaned:
+            cell["source"].pop()
+            continue
+        break
     return cleaned
