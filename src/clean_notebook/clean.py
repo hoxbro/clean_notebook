@@ -42,7 +42,7 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
-        if strip and cell["source"]:
+        if strip and cell["cell_type"] == "code":
             cleaned |= _strip_ending_newline(cell, newline)
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
