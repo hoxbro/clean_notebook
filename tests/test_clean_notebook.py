@@ -36,7 +36,7 @@ def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
 TESTS = ["ascii", "jupyterlab", "vscode", "colab", "empty_cell", "empty_multi_cell"]
 
 
-@pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow", "id"])
+@pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow", "id", "newline"])
 def test_noclean_notebook(temp_path: Path, test: str) -> None:
     dirty = temp_path / f"dirty_{test}.ipynb"
     clean = temp_path / f"clean_{test}.ipynb"
@@ -53,6 +53,19 @@ def test_notebook(temp_path: Path, test: str) -> None:
     clean = temp_path / f"clean_{test}.ipynb"
 
     assert clean_single_notebook(dirty)
+
+    clean_bytes = load_file(clean)
+    dirty_bytes = load_file(dirty)
+
+    assert clean_bytes == dirty_bytes
+
+
+def test_notebook_strip_newline(temp_path: Path) -> None:
+    test = "newline"
+    dirty = temp_path / f"dirty_{test}.ipynb"
+    clean = temp_path / f"clean_{test}.ipynb"
+
+    assert clean_single_notebook(dirty, strip=True)
 
     clean_bytes = load_file(clean)
     dirty_bytes = load_file(dirty)

@@ -35,6 +35,13 @@ def _create_parser() -> argparse.ArgumentParser:
         action="append",
         help="Metadata keys to ignore when cleaning",
     )
+    parser.add_argument(
+        "--strip-trailing-newlines",
+        "-s",
+        dest="strip",
+        action="store_true",
+        help="Strip newline from the end of cells",
+    )
     parser.add_argument("--version", action="version", version=__version__)
     return parser
 

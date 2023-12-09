@@ -14,9 +14,12 @@ def clean_notebook(
     dryrun: bool = False,
     keep_empty: bool = False,
     ignore: list[str] | None = None,
+    strip: bool = False,
 ) -> None:
     for file in sorted(_get_files(paths)):
-        clean_single_notebook(file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore)
+        clean_single_notebook(
+            file, dryrun=dryrun, keep_empty=keep_empty, ignore=ignore, strip=strip
+        )
 
 
 def clean_single_notebook(
@@ -25,6 +28,7 @@ def clean_single_notebook(
     dryrun: bool = False,
     keep_empty: bool = False,
     ignore: list[str] | None = None,
+    strip: bool = False,
 ) -> bool:
     with open(file, encoding="utf8") as f:
         raw = f.read()
@@ -38,6 +42,8 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
+        if strip and cell["cell_type"] == "code":
+            cleaned |= _strip_trailing_newlines(cell, newline)
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
@@ -107,3 +113,17 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
 
     counter = {s.count(e): e for e in endings}
     return counter[max(counter)]
+
+
+def _strip_trailing_newlines(cell: dict[str, Any], newline: AnyStr) -> bool:
+    cleaned = False
+    while cell["source"]:
+        new = cell["source"][-1].rstrip(newline)
+        cleaned |= cell["source"][-1] != new
+        if cleaned and new:
+            cell["source"][-1] = new
+        elif cleaned:
+            cell["source"].pop()
+            continue
+        break
+    return cleaned
