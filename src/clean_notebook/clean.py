@@ -43,12 +43,7 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
         if strip and cell["source"]:
-            new = cell["source"][-1].rstrip(newline)
-            cleaned = cell["source"][-1] != new
-            if new:
-                cell["source"][-1] = new
-            else:
-                cell["source"].pop()
+            cleaned |= _strip_ending_newline(cell, newline)
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
@@ -118,3 +113,13 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
 
     counter = {s.count(e): e for e in endings}
     return counter[max(counter)]
+
+
+def _strip_ending_newline(cell: dict[str, Any], newline: AnyStr) -> bool:
+    new = cell["source"][-1].rstrip(newline)
+    cleaned = cell["source"][-1] != new
+    if new:
+        cell["source"][-1] = new
+    else:
+        cell["source"].pop()
+    return cleaned
