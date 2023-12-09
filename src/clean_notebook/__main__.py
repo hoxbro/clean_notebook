@@ -36,7 +36,7 @@ def _create_parser() -> argparse.ArgumentParser:
         help="Metadata keys to ignore when cleaning",
     )
     parser.add_argument(
-        "--strip-ending-newline",
+        "--strip-trailing-newlines",
         "-s",
         dest="strip",
         action="store_true",

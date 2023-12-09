@@ -43,7 +43,7 @@ def clean_single_notebook(
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
         if strip and cell["cell_type"] == "code":
-            cleaned |= _strip_ending_newline(cell, newline)
+            cleaned |= _strip_trailing_newlines(cell, newline)
         if not cell["source"] and not keep_empty:
             nb["cells"].remove(cell)
             cleaned = True
@@ -115,7 +115,7 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
     return counter[max(counter)]
 
 
-def _strip_ending_newline(cell: dict[str, Any], newline: AnyStr) -> bool:
+def _strip_trailing_newlines(cell: dict[str, Any], newline: AnyStr) -> bool:
     cleaned = False
     while cell["source"]:
         new = cell["source"][-1].rstrip(newline)
