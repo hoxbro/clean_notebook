@@ -36,6 +36,7 @@ jobs:
       id-token: write
     environment:
       name: publish
+      url: https://pypi.org/p/clean-notebook
     steps:
     - uses: actions/download-artifact@v4
       with:
