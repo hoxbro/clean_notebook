@@ -7,6 +7,8 @@ from typing import Any, AnyStr, Iterator
 
 __all__ = ("clean_notebook", "clean_single_notebook")
 
+IGNOREDIRS = (".venv", ".pixi", "site-packages", ".ipynb_checkpoints")
+
 
 def clean_notebook(
     paths: list[str | Path],
@@ -86,9 +88,12 @@ def _get_files(paths: list[str | Path]) -> Iterator[Path]:
         if path.is_file() and path.suffix == ".ipynb":
             yield path
         if path.is_dir():
+            if path.name in IGNOREDIRS:
+                continue
             for file in path.rglob("*.ipynb"):
-                if file.parent.name != ".ipynb_checkpoints":
-                    yield file
+                if any(ps in IGNOREDIRS for ps in file.parts):
+                    continue
+                yield file
 
 
 def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
