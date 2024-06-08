@@ -122,6 +122,7 @@ def test_empty_notebook(capsys: CaptureFixture[str], temp_path: Path) -> None:
     captured = capsys.readouterr()
     assert captured.out.strip() == f"Notebook '{dirty}' does not have any valid cells."
 
+
 def test_bad_json(capsys: CaptureFixture[str], temp_path: Path) -> None:
     file = temp_path / "dirty_bad_json.ipynb"
     with pytest.raises(SystemExit):
