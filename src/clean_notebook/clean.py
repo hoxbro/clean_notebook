@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import uuid
 from pathlib import Path
 from typing import Any, AnyStr, Iterator
@@ -36,7 +37,11 @@ def clean_single_notebook(
         raw = f.read()
 
     newline = _find_line_ending(raw)
-    nb = json.loads(raw)
+    try:
+        nb = json.loads(raw)
+    except json.JSONDecodeError as e:
+        print(f"{file}: Failed to json decode ({e})")
+        sys.exit(1)
     set_id = _check_set_id(nb)
 
     cleaned, sort_keys = False, False
@@ -114,7 +119,7 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
         endings = [b"\n", b"\r", b"\r\n"]
     else:
         msg = "Not str or bytes"
-        raise ValueError(msg)
+        raise TypeError(msg)
 
     counter = {s.count(e): e for e in endings}
     return counter[max(counter)]

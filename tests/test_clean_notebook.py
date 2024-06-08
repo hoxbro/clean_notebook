@@ -21,7 +21,7 @@ def load_file(path: Path) -> bytes:
     return file_bytes.replace(le, b"\n")
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
     src = Path("tests/data").resolve(strict=True)
     dst = tmp_path_factory.mktemp("data")
@@ -121,3 +121,12 @@ def test_empty_notebook(capsys: CaptureFixture[str], temp_path: Path) -> None:
 
     captured = capsys.readouterr()
     assert captured.out.strip() == f"Notebook '{dirty}' does not have any valid cells."
+
+
+def test_bad_json(capsys: CaptureFixture[str], temp_path: Path) -> None:
+    file = temp_path / "dirty_bad_json.ipynb"
+    with pytest.raises(SystemExit):
+        clean_single_notebook(file)
+    captured = capsys.readouterr()
+    msg = f"{file}: Failed to json decode (Expecting ',' delimiter: line 23 column 1 (char 412))"
+    assert captured.out.strip() == msg
