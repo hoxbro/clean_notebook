@@ -21,7 +21,7 @@ def load_file(path: Path) -> bytes:
     return file_bytes.replace(le, b"\n")
 
 
-@pytest.fixture()
+@pytest.fixture
 def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
     src = Path("tests/data").resolve(strict=True)
     dst = tmp_path_factory.mktemp("data")
