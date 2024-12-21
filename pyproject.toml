@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: OS Independent",
 ]
 
@@ -34,6 +35,10 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
 [tool.hatch.version]
 source = "vcs"
+raw-options = { version_scheme = "no-guess-dev" }
+
+[tool.hatch.envs.default]
+installer = "uv"
 
 [tool.hatch.envs.fmt]
 detached = true
@@ -43,30 +48,16 @@ scripts.update = "pre-commit autoupdate"
 [tool.hatch.envs.test]
 dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
-matrix = [{ python = ["3.8", "3.9", "3.10", "3.11", "3.12"] }]
+matrix = [{ python = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
 [tool.hatch.build]
 sources = ["src"]
 
 [tool.pytest.ini_options]
-addopts = "-vv"
-
-[tool.mypy]
-python_version = "3.8"
-files = ["src", "tests"]
-
-strict = true
-
-pretty = true
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-
-implicit_reexport = true
-namespace_packages = true
-warn_return_any = false
-warn_unreachable = true
-disallow_untyped_decorators = false
+addopts = ["--strict-config", "--strict-markers", "--color=yes"]
+minversion = "7"
+xfail_strict = true
+log_cli_level = "INFO"
 
 [tool.ruff]
 line-length = 99
