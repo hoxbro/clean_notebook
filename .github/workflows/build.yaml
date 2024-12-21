@@ -15,18 +15,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Install hatch
-      run: pipx install hatch
-    - name: Build sdist and wheel
-      run: hatch build --clean
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build
-        path: dist/
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install hatch
+        run: pipx install hatch
+      - name: Build sdist and wheel
+        run: hatch build --clean
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: dist/
 
   publish:
     runs-on: ubuntu-latest
@@ -38,9 +38,9 @@ jobs:
       name: publish
       url: https://pypi.org/p/clean-notebook
     steps:
-    - uses: actions/download-artifact@v4
-      with:
-        name: build
-        path: dist/
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
