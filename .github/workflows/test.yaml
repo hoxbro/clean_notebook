@@ -42,7 +42,7 @@ jobs:
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
   unit_test_suite:
-    name: unit:${{ matrix.environment }}:${{ matrix.os }}
+    name: unit:py-${{ matrix.python-version }}:${{ matrix.os }}
     needs: [pre-commit]
     runs-on: ${{ matrix.os }}
     strategy:
