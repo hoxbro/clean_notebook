@@ -94,7 +94,7 @@ select = [
     "RUF",
     "S",
     "SIM",
-    "TCH",
+    "TC",
     "TID",
     "UP",
     "W",
@@ -118,3 +118,11 @@ extend-unsafe-fixes = [
 [tool.ruff.lint.isort]
 known-first-party = ["clean_notebook"]
 required-imports = ["from __future__ import annotations"]
+
+[tool.pyright]
+pythonVersion = "3.8"
+include = ["**/*.py"]
+
+typeCheckingMode = "standard"
+
+reportMissingImports = false

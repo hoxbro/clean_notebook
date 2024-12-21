@@ -115,14 +115,15 @@ def _check_set_id(nb: dict[str, Any]) -> bool:
 def _find_line_ending(s: AnyStr) -> AnyStr:
     if isinstance(s, str):
         endings = ["\n", "\r", "\r\n"]
+        counter = {s.count(e): e for e in endings}
+        return counter[max(counter)]
     elif isinstance(s, bytes):
         endings = [b"\n", b"\r", b"\r\n"]
+        counter = {s.count(e): e for e in endings}
+        return counter[max(counter)]
     else:
         msg = "Not str or bytes"
         raise TypeError(msg)
-
-    counter = {s.count(e): e for e in endings}
-    return counter[max(counter)]
 
 
 def _strip_trailing_newlines(cell: dict[str, Any], newline: AnyStr) -> bool:
