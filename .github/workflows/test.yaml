@@ -53,13 +53,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install hatch
-        run: pipx install hatch
       - name: Testing
-        run: hatch run +py=${{ matrix.python-version }} test:run
+        run: uvx hatch run +py=${{ matrix.python-version }} test:run
 
   result_test_suite:
     name: result:test

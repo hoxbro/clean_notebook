@@ -35,6 +35,10 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
 [tool.hatch.version]
 source = "vcs"
+raw-options = { version_scheme = "no-guess-dev" }
+
+[tool.hatch.envs.default]
+installer = "uv"
 
 [tool.hatch.envs.fmt]
 detached = true
