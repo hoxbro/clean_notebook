@@ -11,38 +11,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: "1"
-      - uses: astral-sh/setup-uv@v4
-        with:
-          python-version: "3.12"
-      - name: Install pre-commit
-        shell: bash -e {0}
-        run: |
-          uv tool install pre-commit --with pre-commit-uv
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit|${{ env.UV_PYTHON }}|${{ hashFiles('.pre-commit-config.yaml') }}
-        id: cache
-      - name: Run pre-commit
-        shell: bash -e {0}
-        run: |
-          # Enable color output for pre-commit and remove it for the summary
-          pre-commit run --all-files --show-diff-on-failure --color=always | tee /tmp/pre-commit.log >&1
-          exit_code=${PIPESTATUS[0]}
-
-          echo '```console' > $GITHUB_STEP_SUMMARY
-          cat /tmp/pre-commit.log | sed -E 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})*)?[mGK]//g' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-
-          exit $exit_code
-      - if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit|${{ env.UV_PYTHON }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      - uses: hoxbro/actions/pre-commit@main
 
   unit_test_suite:
     name: unit:py-${{ matrix.python-version }}:${{ matrix.os }}
