@@ -6,7 +6,6 @@ import uuid
 from pathlib import Path
 
 TYPE_CHECKING = False
-
 if TYPE_CHECKING:
     from typing import Any, AnyStr, Iterator
 
