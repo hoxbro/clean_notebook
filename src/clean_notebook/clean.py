@@ -4,7 +4,11 @@ import json
 import sys
 import uuid
 from pathlib import Path
-from typing import Any, AnyStr, Iterator
+
+TYPE_CHECKING = False
+
+if TYPE_CHECKING:
+    from typing import Any, AnyStr, Iterator
 
 __all__ = ("clean_notebook", "clean_single_notebook")
 
