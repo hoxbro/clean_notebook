@@ -53,9 +53,6 @@ dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
 matrix = [{ python = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"] }]
 
-[tool.hatch.build]
-sources = ["src"]
-
 [tool.pytest.ini_options]
 addopts = ["--strict-config", "--strict-markers", "--color=yes"]
 minversion = "7"
