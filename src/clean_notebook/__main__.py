@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from . import __version__
+from . import __version__  # pyright: ignore[reportAttributeAccessIssue]
 from .clean import clean_notebook
 
 
