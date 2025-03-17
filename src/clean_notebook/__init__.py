@@ -3,7 +3,7 @@ from __future__ import annotations
 from .clean import clean_notebook, clean_single_notebook
 
 try:
-    from ._version import __version__
+    from ._version import __version__  # pyright: ignore[reportAttributeAccessIssue]
 except Exception:
     __version__ = "0.0.0"
 
