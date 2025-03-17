@@ -37,6 +37,9 @@ dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 source = "vcs"
 raw-options = { version_scheme = "no-guess-dev" }
 
+[tool.hatch.build.hooks.vcs]
+version-file = "src/clean_notebook/_version.py"
+
 [tool.hatch.envs.default]
 installer = "uv"
 

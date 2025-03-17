@@ -3,6 +3,7 @@ __pycache__
 *.egg-info
 build
 dist
+_version.py
 
 .vscode
 .*_cache
