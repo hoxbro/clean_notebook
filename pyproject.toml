@@ -30,7 +30,7 @@ Source = "https://github.com/hoxbro/clean_notebook"
 [project.scripts]
 clean-notebook = "clean_notebook.__main__:main"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
 
 [tool.hatch.version]
