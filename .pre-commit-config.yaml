@@ -1,7 +1,7 @@
 exclude: ^tests/data/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: mixed-line-ending
       - id: end-of-file-fixer
@@ -11,12 +11,12 @@ repos:
       - id: check-json
       - id: check-executables-have-shebangs
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0
+    rev: v0.13.0
     hooks:
       - id: ruff-check
       - id: ruff-format
   - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
-    rev: 1.29.4
+    rev: 1.31.4
     hooks:
       - id: basedpyright
   - repo: https://github.com/codespell-project/codespell
@@ -26,7 +26,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/hoxbro/prettier-pre-commit
-    rev: v3.5.3
+    rev: v3.6.2
     hooks:
       - id: prettier
         types_or:
