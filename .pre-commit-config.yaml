@@ -1,7 +1,7 @@
 exclude: ^tests/data/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # frozen: v6.0.0
     hooks:
       - id: mixed-line-ending
       - id: end-of-file-fixer
@@ -11,29 +11,29 @@ repos:
       - id: check-json
       - id: check-executables-have-shebangs
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.0
+    rev: 1a1f58ba4c35362efe8fed2279715a905baee93d # frozen: v0.14.8
     hooks:
       - id: ruff-check
       - id: ruff-format
   - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
-    rev: 1.31.4
+    rev: 1873f9dd1b8aa430de6aec095069ac819079279c # frozen: 1.35.0
     hooks:
       - id: basedpyright
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: 63c8f8312b7559622c0d82815639671ae42132ac # frozen: v2.4.1
     hooks:
       - id: codespell
         additional_dependencies:
           - tomli
   - repo: https://github.com/hoxbro/prettier-pre-commit
-    rev: v3.6.2
+    rev: bae77de89db2ee6b2052f9647b14246e9ee19cd1 # frozen: v3.7.4
     hooks:
       - id: prettier
         types_or:
           - markdown
           - yaml
   - repo: https://github.com/hoxbro/taplo-pre-commit
-    rev: v0.9.3
+    rev: 605f960c3c571f814f535622a688bcde63ee87f6 # frozen: v0.9.3
     hooks:
       - id: taplo
         args:
