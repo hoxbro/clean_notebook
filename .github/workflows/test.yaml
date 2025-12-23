@@ -33,9 +33,27 @@ jobs:
       - name: Testing
         run: uvx ty check .
 
+  type_test_suite:
+    name: type:py-${{ matrix.python-version }}:${{ matrix.os }}
+    needs: [pre-commit]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.8"]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Typing
+        run: uvx ty check .
+
   result_test_suite:
     name: result:test
-    needs: [unit_test_suite]
+    needs: [unit_test_suite, type_test_suite]
     if: always()
     runs-on: ubuntu-latest
     steps:
