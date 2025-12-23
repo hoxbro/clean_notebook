@@ -7,7 +7,7 @@ from pathlib import Path
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Any, AnyStr, Iterator
+    from typing import Any, Iterator, overload
 
 __all__ = ("clean_notebook", "clean_single_notebook")
 
@@ -115,7 +115,16 @@ def _check_set_id(nb: dict[str, Any]) -> bool:
     return (nb["nbformat"] == 4 and nb["nbformat_minor"] >= 5) or nb["nbformat"] >= 5
 
 
-def _find_line_ending(s: AnyStr) -> AnyStr:
+if TYPE_CHECKING:
+
+    @overload
+    def _find_line_ending(s: str) -> str: ...
+
+    @overload
+    def _find_line_ending(s: bytes) -> bytes: ...
+
+
+def _find_line_ending(s: str | bytes) -> str | bytes:
     if isinstance(s, str):
         endings = ["\n", "\r", "\r\n"]
         counter = {s.count(e): e for e in endings}
@@ -129,7 +138,7 @@ def _find_line_ending(s: AnyStr) -> AnyStr:
         raise TypeError(msg)
 
 
-def _strip_trailing_newlines(cell: dict[str, Any], newline: AnyStr) -> bool:
+def _strip_trailing_newlines(cell: dict[str, Any], newline: str | bytes) -> bool:
     cleaned = False
     while cell["source"]:
         new = cell["source"][-1].rstrip(newline)

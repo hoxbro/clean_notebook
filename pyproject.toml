@@ -32,7 +32,7 @@ Source = "https://github.com/hoxbro/clean_notebook"
 clean-notebook = "clean_notebook.__main__:main"
 
 [dependency-groups]
-dev = ["hatch", "pytest", "black", "ruff", "mypy", "pre-commit"]
+dev = ["hatch", "pytest", "ruff", "ty", "pre-commit"]
 
 [tool.hatch.version]
 source = "vcs"
@@ -111,10 +111,8 @@ extend-unsafe-fixes = [
 known-first-party = ["clean_notebook"]
 required-imports = ["from __future__ import annotations"]
 
-[tool.pyright]
-pythonVersion = "3.8"
-include = ["**/*.py"]
+[tool.ty.src]
+exclude = ["**/*.ipynb"]
 
-typeCheckingMode = "standard"
-
-reportMissingImports = false
+[tool.ty.rules]
+unresolved-import = "ignore"

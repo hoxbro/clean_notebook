@@ -11,14 +11,14 @@ repos:
       - id: check-json
       - id: check-executables-have-shebangs
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 1a1f58ba4c35362efe8fed2279715a905baee93d # frozen: v0.14.8
+    rev: 5ba58aca0bd5bc7c0e1c0fc45af2e88d6a2bde83 # frozen: v0.14.10
     hooks:
       - id: ruff-check
       - id: ruff-format
-  - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
-    rev: 1873f9dd1b8aa430de6aec095069ac819079279c # frozen: 1.35.0
+  - repo: https://github.com/hoxbro/ty-pre-commit
+    rev: 8ebf2675da007f54350528c21230eb4cfd78c96d # frozen: v0.0.5
     hooks:
-      - id: basedpyright
+      - id: ty-check
   - repo: https://github.com/codespell-project/codespell
     rev: 63c8f8312b7559622c0d82815639671ae42132ac # frozen: v2.4.1
     hooks:

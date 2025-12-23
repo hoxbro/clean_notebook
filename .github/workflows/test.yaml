@@ -30,6 +30,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Testing
         run: uvx hatch run +py=${{ matrix.python-version }} test:run
+      - name: Testing
+        run: uvx ty check .
 
   result_test_suite:
     name: result:test
