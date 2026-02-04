@@ -97,6 +97,7 @@ ignore = [
     "E402", # Module level import not at top of file
     "E731", # Do not assign a lambda expression, use a def
     "E741", # Ambiguous variable name
+    "PLC0415", # import not at top of file
     "PLR2004", # magic-value-comparison
 ]
 extend-unsafe-fixes = [
