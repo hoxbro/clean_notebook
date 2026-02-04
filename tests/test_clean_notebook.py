@@ -3,13 +3,15 @@ from __future__ import annotations
 import uuid
 from pathlib import Path
 from shutil import copy2, rmtree
-from typing import TYPE_CHECKING, Iterator
 
 import pytest
 
 from clean_notebook.clean import _find_line_ending, clean_single_notebook
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from _pytest.capture import CaptureFixture
     from _pytest.monkeypatch import MonkeyPatch
     from _pytest.tmpdir import TempPathFactory

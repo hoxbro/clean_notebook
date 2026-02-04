@@ -6,8 +6,9 @@ import sys
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
+    from collections.abc import Iterator
     from pathlib import Path
-    from typing import Any, Iterator, overload
+    from typing import Any, overload
 
 __all__ = ("clean_notebook", "clean_single_notebook")
 
