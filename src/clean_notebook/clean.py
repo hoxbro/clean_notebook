@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import os
 import sys
-import uuid
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -62,6 +61,8 @@ def clean_single_notebook(
             del cell["attachments"]
             cleaned = True
         if set_id and cell.get("id") is None:
+            import uuid
+
             sort_keys |= "id" not in cell
             cell["id"] = str(uuid.uuid4())
             cleaned = True
