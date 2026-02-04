@@ -48,15 +48,16 @@ def clean_single_notebook(
     set_id = _check_set_id(nb)
 
     cleaned, sort_keys = False, False
-    for cell in nb["cells"].copy():
+    cells = []
+    for cell in nb["cells"]:
         cleaned |= _update_value(cell, "outputs", [])
         cleaned |= _update_value(cell, "execution_count", None)
         cleaned |= _update_value(cell, "metadata", _ignore(cell, ignore))
         if strip and cell["cell_type"] == "code":
             cleaned |= _strip_trailing_newlines(cell, newline)
         if not cell["source"] and not keep_empty:
-            nb["cells"].remove(cell)
             cleaned = True
+            continue
         if "attachments" in cell and len(cell["attachments"]) == 0:
             del cell["attachments"]
             cleaned = True
@@ -66,6 +67,8 @@ def clean_single_notebook(
             sort_keys |= "id" not in cell
             cell["id"] = str(uuid.uuid4())
             cleaned = True
+        cells.append(cell)
+    nb["cells"] = cells
 
     if not nb["cells"]:
         print(f"Notebook '{file}' does not have any valid cells.")
