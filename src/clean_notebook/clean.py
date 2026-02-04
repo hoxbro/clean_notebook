@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import uuid
-from pathlib import Path
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
+    from pathlib import Path
     from typing import Any, Iterator, overload
 
 __all__ = ("clean_notebook", "clean_single_notebook")
@@ -29,7 +30,7 @@ def clean_notebook(
 
 
 def clean_single_notebook(
-    file: Path,
+    file: str | Path,
     *,
     dryrun: bool = False,
     keep_empty: bool = False,
@@ -91,17 +92,20 @@ def _update_value(dct: dict[str, Any], key: str, value: Any) -> bool:
         return False
 
 
-def _get_files(paths: list[str | Path]) -> Iterator[Path]:
-    for path in map(Path, paths):
-        if path.is_file() and path.suffix == ".ipynb":
+def _get_files(paths: list[str | Path]) -> Iterator[str]:
+    for path in map(str, paths):
+        if os.path.isfile(path) and path.endswith(".ipynb"):
             yield path
-        if path.is_dir():
-            if path.name in IGNOREDIRS:
-                continue
-            for file in path.rglob("*.ipynb"):
-                if any(ps in IGNOREDIRS for ps in file.parts):
-                    continue
-                yield file
+        elif os.path.isdir(path):
+            yield from _scan_dir(path)
+
+
+def _scan_dir(path: str) -> Iterator[str]:
+    for entry in os.scandir(path):
+        if entry.is_file() and entry.name.endswith(".ipynb"):
+            yield entry.path
+        elif entry.is_dir() and entry.name not in IGNOREDIRS:
+            yield from _scan_dir(entry.path)
 
 
 def _ignore(cell: dict[str, Any], ignore: list[str] | None) -> dict[str, Any]:
