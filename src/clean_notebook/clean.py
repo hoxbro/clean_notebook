@@ -48,7 +48,7 @@ def clean_single_notebook(
         sys.exit(1)
     set_id = _check_set_id(nb)
 
-    cleaned, sort_keys = False, False
+    cleaned, sort_keys = raw[-1] != newline, False
     cells = []
     for cell in nb["cells"]:
         cleaned |= _update_value(cell, "outputs", [])
