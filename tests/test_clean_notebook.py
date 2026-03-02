@@ -35,7 +35,15 @@ def temp_path(tmp_path_factory: TempPathFactory) -> Iterator[Path]:
     rmtree(dst)
 
 
-TESTS = ["ascii", "jupyterlab", "vscode", "colab", "empty_cell", "empty_multi_cell"]
+TESTS = [
+    "ascii",
+    "jupyterlab",
+    "vscode",
+    "colab",
+    "empty_cell",
+    "empty_multi_cell",
+    "no_empty_line_at_end",
+]
 
 
 @pytest.mark.parametrize("test", [*TESTS, "ignore_slideshow", "id", "newline"])
