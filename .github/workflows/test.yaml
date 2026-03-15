@@ -24,8 +24,8 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Testing
@@ -42,8 +42,8 @@ jobs:
         python-version: ["3.10", "3.14"]
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Typing

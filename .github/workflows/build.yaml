@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Install hatch
@@ -23,7 +23,7 @@ jobs:
       - name: Build sdist and wheel
         run: hatch build --clean
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build
           path: dist/
@@ -38,7 +38,7 @@ jobs:
       name: publish
       url: https://pypi.org/p/clean-notebook
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: build
           path: dist/
