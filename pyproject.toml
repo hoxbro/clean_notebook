@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Operating System :: OS Independent",
 ]
 
@@ -50,7 +51,7 @@ scripts.update = "pre-commit autoupdate"
 [tool.hatch.envs.test]
 dependencies = ["pytest", "pytest-github-actions-annotate-failures"]
 scripts.run = "pytest tests"
-matrix = [{ python = ["3.10", "3.11", "3.12", "3.13", "3.14"] }]
+matrix = [{ python = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"] }]
 
 [tool.pytest.ini_options]
 addopts = ["--strict-config", "--strict-markers", "--color=yes"]
