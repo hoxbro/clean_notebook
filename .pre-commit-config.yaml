@@ -11,22 +11,22 @@ repos:
       - id: check-json
       - id: check-executables-have-shebangs
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 0470f7c8a653e950f7cc5a653204ceb3fde4c02a # frozen: v0.15.0
+    rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246 # frozen: v0.15.15
     hooks:
       - id: ruff-check
       - id: ruff-format
   - repo: https://github.com/hoxbro/ty-pre-commit
-    rev: 334218567a5e6da71eb2a2ab03c31df9ce01986a # frozen: v0.0.14
+    rev: 23cb3014e3d1e20b48267ad85c51168b692f29b5 # frozen: v0.0.40
     hooks:
       - id: ty-check
   - repo: https://github.com/codespell-project/codespell
-    rev: 63c8f8312b7559622c0d82815639671ae42132ac # frozen: v2.4.1
+    rev: 2ccb47ff45ad361a21071a7eedda4c37e6ae8c5a # frozen: v2.4.2
     hooks:
       - id: codespell
         additional_dependencies:
           - tomli
   - repo: https://github.com/hoxbro/prettier-pre-commit
-    rev: 86ff8f664c20f581d71c90a6ea0073c1bcafe1e5 # frozen: v3.8.1
+    rev: fb4fd26ea947350ec231580772317ec7261c8e21 # frozen: v3.8.3
     hooks:
       - id: prettier
         types_or:
