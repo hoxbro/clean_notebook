@@ -7,11 +7,17 @@ on:
     branches:
       - "*"
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: hoxbro/actions/pre-commit@main
+      - uses: holoviz-dev/holoviz_tasks/pre-commit@ab994f6a87c4fdb1363925d26c85a5bab2144f28 # v1.0.0
 
   unit_test_suite:
     name: unit:py-${{ matrix.python-version }}:${{ matrix.os }}
